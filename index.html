@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f5f0">
+  <meta name="description" content="A transparent preliminary screening tool for suspension bridge cable wire materials.">
+  <title>Strand — Cable Material Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="Strand home"><span class="brand-mark">S</span><span>strand<span class="brand-dot">.</span></span></a>
+    <div class="top-meta"><span class="status-dot"></span> PRELIMINARY DESIGN TOOL <span class="meta-sep">/</span> v1.0</div>
+    <a class="source-link" href="https://github.com/Raghav1822/suspension-bridge-material-selector" target="_blank" rel="noreferrer">Project source <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">BRIDGE ENGINEERING · MATERIAL SELECTION</p>
+        <h1>Choose the right<br><em>strength for the span.</em></h1>
+        <p class="hero-lede">Compare real bridge-wire strength grades against the demands of your cable. See the trade-offs in capacity, weight, durability, cost and carbon—in one clear view.</p>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="art-label">CABLE STUDY <span>NO. 001</span></div>
+        <svg viewBox="0 0 430 214" role="img"><path class="bridge-main" d="M8 167 C95 164 129 42 218 42 S342 164 422 167"/><path class="bridge-deck" d="M20 169H414"/><path class="bridge-tower" d="M127 28V183M119 28H135M303 28V183M295 28H311"/><path class="bridge-hanger" d="M66 144V169M93 116V169M121 81V169M151 57V169M180 44V169M210 42V169M240 45V169M270 56V169M300 79V169M329 112V169M357 144V169"/><path class="bridge-water" d="M25 193H405M58 203H366"/></svg>
+        <div class="art-caption">MAIN CABLE · SUSPENSION SYSTEM</div>
+      </div>
+    </section>
+
+    <section class="workspace" aria-label="Material screening workspace">
+      <aside class="controls panel">
+        <div class="section-heading"><div><p class="eyebrow">01 / DESIGN CASE</p><h2>Set the brief</h2></div><span class="step-number">01</span></div>
+        <p class="section-note">Enter the demand for one main cable. Results are screening estimates, not a final design.</p>
+        <label class="field-label" for="load">Cable tension <span>F</span></label>
+        <div class="input-wrap"><input id="load" type="number" min="1" step="1000" value="180000"><span>kN</span></div>
+        <label class="field-label" for="length">Cable length <span>L</span></label>
+        <div class="input-wrap"><input id="length" type="number" min="1" step="10" value="1200"><span>m</span></div>
+        <label class="field-label" for="safety">Screening safety factor <span>N</span></label>
+        <div class="input-wrap"><input id="safety" type="number" min="1" max="10" step="0.1" value="2.5"><span>×</span></div>
+        <div class="input-hint">Allowable stress = ultimate strength ÷ safety factor</div>
+        <div class="control-divider"></div>
+        <div class="section-heading mini-heading"><div><p class="eyebrow">02 / PRIORITIES</p><h2>What matters most?</h2></div></div>
+        <p class="section-note">Adjust the influence of each criterion. Scores are normalized across the materials below.</p>
+        <div id="weights" class="weights"></div>
+        <div class="weight-total"><span>WEIGHT TOTAL</span><strong id="weight-total">100%</strong></div>
+        <button id="reset-weights" class="text-button" type="button">Reset balanced weights ↺</button>
+      </aside>
+
+      <section class="results-column">
+        <div class="summary-grid" id="summary" aria-live="polite"></div>
+        <section class="panel ranking-panel">
+          <div class="section-heading ranking-heading"><div><p class="eyebrow">03 / MATERIAL RANKING</p><h2>Wire grade comparison</h2></div><span class="basis-label">4 GALVANIZED STEEL GRADES</span></div>
+          <p class="section-note ranking-note">Rankings balance your priorities; select a row to inspect the full material profile.</p>
+          <div class="table-scroll"><table><thead><tr><th scope="col">RANK / MATERIAL</th><th scope="col">ULTIMATE<br>STRENGTH</th><th scope="col">AREA<br>REQUIRED</th><th scope="col">CABLE<br>MASS</th><th scope="col">ELONGATION</th><th scope="col">COST<br>ESTIMATE</th><th scope="col">SCORE</th></tr></thead><tbody id="results-body"></tbody></table></div>
+          <div class="table-foot"><span>01—04</span><span>Estimates use the stated cable tension, length and screening factor.</span></div>
+        </section>
+
+        <section class="detail-grid">
+          <article class="panel detail-panel" id="detail-panel" aria-live="polite"></article>
+          <article class="panel chart-panel"><div class="section-heading"><div><p class="eyebrow">04 / TRADE-OFFS</p><h2>At a glance</h2></div><span class="chart-unit">RELATIVE SCORE / 100</span></div><div id="chart" class="chart"></div><p class="chart-note">Scores are relative to the grades in this study, not code-compliance ratings.</p></article>
+        </section>
+      </section>
+    </section>
+
+    <section class="method panel">
+      <div><p class="eyebrow">THE ENGINEERING MODEL</p><h2>Clear inputs.<br><em>Traceable equations.</em></h2><p class="method-copy">A first-pass comparison using common cable-screening relationships. Property estimates are disclosed and editable in the source; verify project-specific values before design use.</p><a class="method-link" href="https://github.com/Raghav1822/suspension-bridge-material-selector/blob/main/matlab/screenCableMaterials.m" target="_blank" rel="noreferrer">View MATLAB calculation model ↗</a></div>
+      <div class="equations"><div><span>ALLOWABLE STRESS</span><code>σ<sub>allow</sub> = σ<sub>UTS</sub> / N</code></div><div><span>REQUIRED AREA</span><code>A = F / σ<sub>allow</sub></code></div><div><span>CABLE MASS</span><code>m = ρ · A · L</code></div><div><span>ELONGATION</span><code>δ = F · L / (A · E)</code></div><div><span>SPECIFIC STRENGTH</span><code>σ<sub>UTS</sub> / ρ</code></div><div><span>COST · EMBODIED CARBON</span><code>C = m · C<sub>kg</sub> &nbsp; CO₂ = m · EF</code></div></div>
+    </section>
+    <footer><span>STRAND MATERIAL STUDIO</span><span>Preliminary selection aid · Not for construction or certification</span><a href="https://github.com/Raghav1822/suspension-bridge-material-selector" target="_blank" rel="noreferrer">ABOUT THIS PROJECT ↗</a></footer>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
